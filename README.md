@@ -4,7 +4,7 @@ A PHP client for the Quovo API
 
 ## Roadmap
 
-### 0.1
+### 0.0.1
 
 - [ ] /accounts
 - [ ] /challenges
