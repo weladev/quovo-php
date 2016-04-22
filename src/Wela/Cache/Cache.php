@@ -14,12 +14,22 @@ class Cache
         $this->cache->setCacheDirectory('./cache');
     }
 
-    public function create($fileName, $data, $exp = 1800)
+    public function create($fileName, $data, $exp = 2)
     {
         return $this->cache->getOrCreate($fileName, [
             'max-age' => $exp
         ], function() use($data) {
             return $data;
         });
+    }
+
+    public function getCache($fileName)
+    {
+        return $this->cache->get($fileName);
+    }
+
+    public function check($fileName)
+    {
+        return $this->cache->exists($fileName);
     }
 }
