@@ -28,4 +28,13 @@ class Brokerage extends QuovoAbstract
             self::PATH
         );
     }
+
+    public function find($id)
+    {
+        return $this->get(
+            $this->app,
+            $this->client,
+            self::PATH . '/' . $id
+        );
+    }
 }

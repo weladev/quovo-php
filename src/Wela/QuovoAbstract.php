@@ -4,7 +4,7 @@ namespace Wela;
 
 abstract class QuovoAbstract
 {
-    public function get(QuovoApp $app, QuovoClient $qClient, $path, $options = [])
+    protected function get(QuovoApp $app, QuovoClient $qClient, $path, $options = [])
     {
         $client = $qClient->getClient();
         $token = $app->getAccessToken()->getValue();
