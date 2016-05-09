@@ -11,7 +11,7 @@ class Cache
     public function __construct()
     {
         $this->cache = new GregwarCache();
-        $this->cache->setCacheDirectory('./cache');
+        $this->cache->setCacheDirectory(dirname(dirname(dirname(__DIR__))).'/cache');
     }
 
     public function create($fileName, $data, $exp = 2)
