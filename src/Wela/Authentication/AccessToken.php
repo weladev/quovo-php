@@ -35,7 +35,7 @@ class AccessToken
                     $this->config['password']
                 ],
                 'json' => [
-                    'name' => 'main_token'
+                    'name' => uniqid().'_main_token'
                 ]
             ]);
 

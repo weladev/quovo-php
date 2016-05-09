@@ -4,6 +4,7 @@ namespace Wela;
 
 
 use Wela\Entities\Brokerage;
+use Wela\Entities\User;
 
 class Quovo
 {
@@ -33,5 +34,10 @@ class Quovo
     public function brokerage()
     {
         return new Brokerage($this->app, $this->client);
+    }
+
+    public function user()
+    {
+        return new User($this->app, $this->client);
     }
 }
