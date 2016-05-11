@@ -2,8 +2,9 @@
 
 namespace Wela;
 
-
+use Wela\Entities\Account;
 use Wela\Entities\Brokerage;
+use Wela\Entities\Challenges;
 use Wela\Entities\User;
 
 class Quovo
@@ -36,8 +37,27 @@ class Quovo
         return new Brokerage($this->app, $this->client);
     }
 
+    /**
+     * @return User
+     */
     public function user()
     {
         return new User($this->app, $this->client);
+    }
+
+    /**
+     * @return Account
+     */
+    public function account()
+    {
+        return new Account($this->app, $this->client);
+    }
+
+    /**
+     * @return Challenges
+     */
+    public function challenges()
+    {
+        return new Challenges($this->app, $this->client);
     }
 }
