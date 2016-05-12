@@ -7,11 +7,11 @@ use Wela\QuovoApp;
 use Wela\QuovoClient;
 
 /**
- * Class UserAccount
+ * Class Iframe
  *
  * @package Wela\Entities
  */
-class UserAccount extends QuovoAbstract
+class Iframe extends QuovoAbstract
 {
     /**
      * @var QuovoApp The Quovo app entity.
@@ -26,10 +26,10 @@ class UserAccount extends QuovoAbstract
     /**
      * @const string The uri used for this entity.
      */
-    const PATH = 'users/%d/accounts';
+    const PATH = 'iframe_token';
 
     /**
-     * UserAccount constructor.
+     * Iframe constructor.
      *
      * @param QuovoApp $app
      * @param QuovoClient $client
@@ -41,46 +41,29 @@ class UserAccount extends QuovoAbstract
     }
 
     /**
-     * Create an account
+     * Creating an iframe token
      *
-     * Creates an Account for a User.
+     * Use this endpoint to create a single-use iframe-access token for a User.
+     * This token will provide a User access to their iframe widget and all of
+     * their associated Accounts.
      *
-     * @param int   $userId
-     * @param array $params
+     * @param int $userId
      *
      * @return mixed
      */
-    public function create($userId, array $params)
+    public function getIframeToken($userId)
     {
         $options = [
-            'json' => $params
+            'json' => [
+                'user' => $userId
+            ]
         ];
 
         return $this->post(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId),
+            self::PATH,
             $options
         );
     }
-
-    /**
-     * Get Accounts
-     *
-     * Returns all of a User’s Accounts.
-     *
-     * @param $userId
-     *
-     * @return mixed
-     */
-    public function all($userId)
-    {
-        return $this->get(
-            $this->app,
-            $this->client,
-            sprintf(self::PATH, $userId)
-        );
-    }
-
-
 }

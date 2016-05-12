@@ -7,11 +7,11 @@ use Wela\QuovoApp;
 use Wela\QuovoClient;
 
 /**
- * Class UserAccount
+ * Class Positions
  *
  * @package Wela\Entities
  */
-class UserAccount extends QuovoAbstract
+class Positions extends QuovoAbstract
 {
     /**
      * @var QuovoApp The Quovo app entity.
@@ -26,10 +26,10 @@ class UserAccount extends QuovoAbstract
     /**
      * @const string The uri used for this entity.
      */
-    const PATH = 'users/%d/accounts';
+    const PATH = 'positions';
 
     /**
-     * UserAccount constructor.
+     * Positions constructor.
      *
      * @param QuovoApp $app
      * @param QuovoClient $client
@@ -41,46 +41,25 @@ class UserAccount extends QuovoAbstract
     }
 
     /**
-     * Create an account
+     * Get all Positions
      *
-     * Creates an Account for a User.
+     * Fetches on all Positions across all Portfolios and Accounts.
      *
-     * @param int   $userId
      * @param array $params
      *
      * @return mixed
      */
-    public function create($userId, array $params)
+    public function all(array $params = [])
     {
         $options = [
-            'json' => $params
+            'query' => $params
         ];
 
-        return $this->post(
-            $this->app,
-            $this->client,
-            sprintf(self::PATH, $userId),
-            $options
-        );
-    }
-
-    /**
-     * Get Accounts
-     *
-     * Returns all of a User’s Accounts.
-     *
-     * @param $userId
-     *
-     * @return mixed
-     */
-    public function all($userId)
-    {
         return $this->get(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId)
+            self::PATH,
+            $options
         );
     }
-
-
 }

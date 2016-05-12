@@ -7,11 +7,11 @@ use Wela\QuovoApp;
 use Wela\QuovoClient;
 
 /**
- * Class UserAccount
+ * Class Sync
  *
  * @package Wela\Entities
  */
-class UserAccount extends QuovoAbstract
+class Sync extends QuovoAbstract
 {
     /**
      * @var QuovoApp The Quovo app entity.
@@ -26,10 +26,10 @@ class UserAccount extends QuovoAbstract
     /**
      * @const string The uri used for this entity.
      */
-    const PATH = 'users/%d/accounts';
+    const PATH = 'sync';
 
     /**
-     * UserAccount constructor.
+     * Sync constructor.
      *
      * @param QuovoApp $app
      * @param QuovoClient $client
@@ -41,46 +41,52 @@ class UserAccount extends QuovoAbstract
     }
 
     /**
-     * Create an account
+     * Get Sync progress
      *
-     * Creates an Account for a User.
+     * Check the ongoing sync progress of an Account.
      *
-     * @param int   $userId
-     * @param array $params
+     * @param int $accountId
      *
      * @return mixed
      */
-    public function create($userId, array $params)
+    public function getSyncStatus($accountId)
     {
         $options = [
-            'json' => $params
+            'query' => [
+                'account' => $accountId
+            ]
         ];
 
-        return $this->post(
+        return $this->get(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId),
+            self::PATH,
             $options
         );
     }
 
     /**
-     * Get Accounts
+     * Create Sync
      *
-     * Returns all of a User’s Accounts.
+     * Creates and initiates a new account sync.
      *
-     * @param $userId
+     * @param int $accountId
      *
      * @return mixed
      */
-    public function all($userId)
+    public function sync($accountId)
     {
-        return $this->get(
+        $options = [
+            'json' => [
+                'account' => $accountId
+            ]
+        ];
+
+        return $this->post(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId)
+            self::PATH,
+            $options
         );
     }
-
-
 }

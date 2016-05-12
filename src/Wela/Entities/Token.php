@@ -7,11 +7,11 @@ use Wela\QuovoApp;
 use Wela\QuovoClient;
 
 /**
- * Class UserAccount
+ * Class Token
  *
  * @package Wela\Entities
  */
-class UserAccount extends QuovoAbstract
+class Token extends QuovoAbstract
 {
     /**
      * @var QuovoApp The Quovo app entity.
@@ -26,10 +26,10 @@ class UserAccount extends QuovoAbstract
     /**
      * @const string The uri used for this entity.
      */
-    const PATH = 'users/%d/accounts';
+    const PATH = 'tokens';
 
     /**
-     * UserAccount constructor.
+     * Token constructor.
      *
      * @param QuovoApp $app
      * @param QuovoClient $client
@@ -41,16 +41,31 @@ class UserAccount extends QuovoAbstract
     }
 
     /**
-     * Create an account
+     * Get all access tokens
      *
-     * Creates an Account for a User.
+     * Retrieves all of your access tokens.
      *
-     * @param int   $userId
+     * @return mixed
+     */
+    public function all()
+    {
+        return $this->get(
+            $this->app,
+            $this->client,
+            self::PATH
+        );
+    }
+
+    /**
+     * Create an access token
+     *
+     * Creates and returns an access token.
+     *
      * @param array $params
      *
      * @return mixed
      */
-    public function create($userId, array $params)
+    public function create(array $params)
     {
         $options = [
             'json' => $params
@@ -59,28 +74,31 @@ class UserAccount extends QuovoAbstract
         return $this->post(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId),
+            self::PATH,
             $options
         );
     }
 
     /**
-     * Get Accounts
+     * Delete Token
      *
-     * Returns all of a User’s Accounts.
+     * Deletes an Authentication Token
      *
-     * @param $userId
-     *
-     * @return mixed
+     * @param string $tokenName
      */
-    public function all($userId)
+    public function deleteToken($tokenName)
     {
-        return $this->get(
+        $options = [
+            'json' => [
+                'name' => $tokenName
+            ]
+        ];
+
+        $this->delete(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId)
+            self::PATH,
+            $options
         );
     }
-
-
 }

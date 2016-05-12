@@ -7,11 +7,11 @@ use Wela\QuovoApp;
 use Wela\QuovoClient;
 
 /**
- * Class UserAccount
+ * Class TermsOfUse
  *
  * @package Wela\Entities
  */
-class UserAccount extends QuovoAbstract
+class TermsOfUse extends QuovoAbstract
 {
     /**
      * @var QuovoApp The Quovo app entity.
@@ -26,10 +26,10 @@ class UserAccount extends QuovoAbstract
     /**
      * @const string The uri used for this entity.
      */
-    const PATH = 'users/%d/accounts';
+    const PATH = 'terms_of_use';
 
     /**
-     * UserAccount constructor.
+     * TermsOfUse constructor.
      *
      * @param QuovoApp $app
      * @param QuovoClient $client
@@ -41,46 +41,50 @@ class UserAccount extends QuovoAbstract
     }
 
     /**
-     * Create an account
+     * Check ToU Acceptance
      *
-     * Creates an Account for a User.
+     * Check whether or not a User has accepted Quovo’s terms of use.
      *
-     * @param int   $userId
-     * @param array $params
+     * @param int $userId
      *
      * @return mixed
      */
-    public function create($userId, array $params)
+    public function checkAcceptance($userId)
     {
         $options = [
-            'json' => $params
+            'query' => [
+                'user' => $userId
+            ]
         ];
 
-        return $this->post(
+        return $this->get(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId),
+            self::PATH,
             $options
         );
     }
 
     /**
-     * Get Accounts
+     * Update ToU Acceptance
      *
-     * Returns all of a User’s Accounts.
+     * Update whether or not a User has accepted Quovo’s terms of use.
      *
-     * @param $userId
+     * @param array $params
      *
      * @return mixed
      */
-    public function all($userId)
+    public function update(array $params)
     {
-        return $this->get(
+        $options = [
+            'json' => $params
+        ];
+
+        return $this->put(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId)
+            self::PATH,
+            $options
         );
     }
-
-
 }

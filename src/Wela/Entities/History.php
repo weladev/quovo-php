@@ -7,11 +7,11 @@ use Wela\QuovoApp;
 use Wela\QuovoClient;
 
 /**
- * Class UserAccount
+ * Class History
  *
  * @package Wela\Entities
  */
-class UserAccount extends QuovoAbstract
+class History extends QuovoAbstract
 {
     /**
      * @var QuovoApp The Quovo app entity.
@@ -26,10 +26,10 @@ class UserAccount extends QuovoAbstract
     /**
      * @const string The uri used for this entity.
      */
-    const PATH = 'users/%d/accounts';
+    const PATH = 'history';
 
     /**
-     * UserAccount constructor.
+     * History constructor.
      *
      * @param QuovoApp $app
      * @param QuovoClient $client
@@ -41,46 +41,50 @@ class UserAccount extends QuovoAbstract
     }
 
     /**
-     * Create an account
+     * Get all transactions
      *
-     * Creates an Account for a User.
+     * Provides historical transactions across all of your users and their accounts.
      *
-     * @param int   $userId
-     * @param array $params
+     * @param array $params The request params.
      *
      * @return mixed
      */
-    public function create($userId, array $params)
+    public function all(array $params = [])
     {
         $options = [
-            'json' => $params
+            'query' => $params
         ];
 
-        return $this->post(
+        return $this->get(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId),
+            self::PATH,
             $options
         );
     }
 
     /**
-     * Get Accounts
+     * Update a transaction
      *
-     * Returns all of a User’s Accounts.
+     * Update an existing historical transaction. Currently, only used to update a
+     * transaction’s expense_category.
      *
-     * @param $userId
+     * @param int   $transactionId
+     * @param array $params
      *
      * @return mixed
      */
-    public function all($userId)
+    public function update($transactionId, array $params)
     {
-        return $this->get(
+        $options = [
+            'json' => $params
+        ];
+
+        return $this->put(
             $this->app,
             $this->client,
-            sprintf(self::PATH, $userId)
+            self::PATH.'/'.$transactionId,
+            $options
         );
     }
-
-
 }
