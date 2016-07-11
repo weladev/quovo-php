@@ -3,6 +3,7 @@
   "description": "Quovo API Client built on top of Guzzle",
   "minimum-stability": "stable",
   "license": "MIT",
+  "homepage": "https://github.com/weladev/quovo-php",
   "authors": [
     {
       "name": "Wela Dev Team",
@@ -10,6 +11,7 @@
     }
   ],
   "require": {
+    "php": ">=5.5.0",
     "gregwar/cache": "1.0.*",
     "guzzlehttp/guzzle": "~6.0"
   },
